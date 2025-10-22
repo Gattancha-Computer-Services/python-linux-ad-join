@@ -116,7 +116,10 @@ def format_as_dn(ou_path, domain):
     return full_ou_path
 
 def update_sssd_conf():
-    print(f"{sssd_file}")
+    sssd_path = "/etc/sssd/sssd.conf"
+    with open(sssd_path, 'w') as f:
+        for line in sssd_file:
+            f.write(line)
 
 #Run our code
 full_ou_path = format_as_dn(org_unit,domain_name)
