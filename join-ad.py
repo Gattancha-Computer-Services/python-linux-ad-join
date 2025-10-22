@@ -88,16 +88,17 @@ def run_command(*args):
                 capture_output=True,
                 text=True
                 )
-        print(f"Running: ",result.stdout)
     except subprocess.CalledProcessError as e:
         print(f"Error: ", e.stderr)
 
 def enable_svc(service):
+    print(f"Enabling service: {service}")
     run_command("systemctl","enable","--now",service)
 
 def dnf_install(*packages):
     
     for package in list(packages):
+        print(f"Installing: {package}")
         run_command("sudo", "dnf", "install", "-y", package, "-q")
 
 def join_domain():
@@ -114,16 +115,15 @@ def join_domain():
 
     if rc == 0:
         print(f"Welcome to {realm_name}")
-        print(stdout)
     else:
         print(f"Failed to join {realm_name}")
-        print(stderr)
     return rc, stdout, stderr
 
 def configure_domain():
     run_command("realm", "deny", "--all")
     run_command("realm","permit","-g","'"+sudo_group_name+"'")
     update_sssd_conf()
+
 def format_as_dn(ou_path, domain):
     parts = re.split(r"[\\/]", ou_path)
     ou_string = ",".join(f"OU={p}" for p in reversed(parts))
@@ -151,4 +151,4 @@ configure_domain()
 update_sudoers()
 enable_svc("sssd")
 enable_svc("oddjobd")
-
+print(f"\nComputer has successfully joined the {domain_name} Domain\nPlease reboot the system now")
