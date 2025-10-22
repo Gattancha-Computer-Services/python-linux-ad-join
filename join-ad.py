@@ -93,7 +93,7 @@ def format_as_dn(ou_path, domain):
     full_ou_path = ou_string+","+dc_string
     return full_ou_path
 
-def update_sssd_conf()
+def update_sssd_conf():
     print(f"{sssd_file}")
 
 #Run our code
