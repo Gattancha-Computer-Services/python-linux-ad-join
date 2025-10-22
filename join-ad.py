@@ -37,8 +37,8 @@ domain_name = input("FQDN Domain Name: ").lower()
 org_unit = input("OU Path: ")
 
 # TODO: Possible User vars..
-sudo_group_name = "Sudo_Allow" 
-ssh_group_name = "SSH_Allow"
+sudo_group_name = "G-Linux-Allow-Sudo" 
+ssh_group_name = "G-Linux-Allow-Login"
 
 #Generated System Variables
 short_domain = domain_name.split(".")[0].upper()
@@ -99,7 +99,25 @@ def dnf_install(*packages):
 
 def join_domain():
     os_name = get_os_name()
-    run_command("echo", ad_password, "|","realm","-v","join",realm_name,"-U",fqdn_username,"--computer-ou='"+full_ou_path+"' --os-name='"+os_name+"'")
+
+    send_password = subprocess.Popen(["/usr/bin/echo", ad_password],stdout=subprocess.PIPE,text=True)
+
+    do_adjoin = subprocess.Popen(["realm", "-v", "join", domain_name,"-U", fqdn_username,f"--computer-ou={full_ou_path}",f"--os-name={os_name}"],
+        stdin=send_password.stdout,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+    send_password.stdout.close()
+
+    stdout, stderr = do_adjoin.communicate()
+    rc = do_adjoin.returncode
+
+    if rc == 0:
+        print(f"Welcome to {realm_name}")
+        print(stdout)
+    else:
+        print(f"Failed to Join {realm_name}")
+        print(stderr)
+
+    return rc, stdout, stderr
+
 
 def configure_domain():
     run_command("realm", "deny", "--all")
