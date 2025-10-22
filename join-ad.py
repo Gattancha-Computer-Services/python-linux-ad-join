@@ -121,8 +121,15 @@ def update_sssd_conf():
         for line in sssd_file:
             f.write(line)
 
+def update_sudoers():
+    sudoers_path = "/etc/sudoers.d/domainusers"
+    with open(sudoers_path, 'w') as f:
+        for line in sudo_users:
+            f.write(line)
+
 #Run our code
 full_ou_path = format_as_dn(org_unit,domain_name)
 dnf_install(*dnf_packages)
 join_domain()
 configure_domain()
+update_sudoers()
