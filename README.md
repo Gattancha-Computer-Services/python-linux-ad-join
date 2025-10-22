@@ -16,7 +16,7 @@ This script automates the process of joining a RHEL-based Linux server to Active
 ### Installing
 
 * Download or clone the python-linux-ad-join.py script to the target Linux Server
-* CD into the directory containing the scipr
+* CD into the directory containing the script
 * Run: chmod +x ./python-linux-ad-join.py
 
 
