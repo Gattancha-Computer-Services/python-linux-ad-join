@@ -79,8 +79,8 @@ def dnf_install(*packages):
 
 def join_domain():
     os_name = get_os_name()
-    print("echo", ad_password, "|","realm","-v","join",realm_name,"-U",fqdn_username,"--computer-ou='"+org_unit+"' --os-name='"+os_name+"'")
-    #run_command("echo", ad_password, "|","realm","-v","join",realm_name,"-U",fqdn_username,"--computer-ou='"+org_unit+"' --os-name='"+os_name+"'")
+    print("echo", ad_password, "|","realm","-v","join",realm_name,"-U",fqdn_username,"--computer-ou='"+full_ou_path+"' --os-name='"+os_name+"'")
+    #run_command("echo", ad_password, "|","realm","-v","join",realm_name,"-U",fqdn_username,"--computer-ou='"+full_ou_path+"' --os-name='"+os_name+"'")
 
 def configure_domain():
     run_command("realm", "deny", "--all")
