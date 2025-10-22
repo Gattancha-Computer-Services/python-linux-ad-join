@@ -37,7 +37,7 @@ domain_name = input("FQDN Domain Name: ").lower()
 org_unit = input("OU Path: ")
 
 # TODO: Possible User vars..
-sudo_group_name = "Sudo_Allow"
+sudo_group_name = "Sudo_Allow" 
 ssh_group_name = "SSH_Allow"
 
 #Generated System Variables
@@ -71,7 +71,7 @@ access_provider = simple
 simple_allow_groups = {ssh_group_name}
 """
 
-#Define  Functions
+#Define Functions
 def get_os_name():
     with open(os_release) as stream:
         reader = csv.reader(stream, delimiter="=")
@@ -95,13 +95,11 @@ def run_command(*args):
 def dnf_install(*packages):
     
     for package in list(packages):
-        print(f"Attempting to install package: {package}")
-        #run_command("sudo", "dnf", "install", "-y", package, "-q")
+        run_command("sudo", "dnf", "install", "-y", package, "-q")
 
 def join_domain():
     os_name = get_os_name()
-    print("echo", ad_password, "|","realm","-v","join",realm_name,"-U",fqdn_username,"--computer-ou='"+full_ou_path+"' --os-name='"+os_name+"'")
-    #run_command("echo", ad_password, "|","realm","-v","join",realm_name,"-U",fqdn_username,"--computer-ou='"+full_ou_path+"' --os-name='"+os_name+"'")
+    run_command("echo", ad_password, "|","realm","-v","join",realm_name,"-U",fqdn_username,"--computer-ou='"+full_ou_path+"' --os-name='"+os_name+"'")
 
 def configure_domain():
     run_command("realm", "deny", "--all")
