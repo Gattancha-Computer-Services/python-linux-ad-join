@@ -113,9 +113,8 @@ def join_domain():
         print(f"Welcome to {realm_name}")
         print(stdout)
     else:
-        print(f"Failed to Join {realm_name}")
+        print(f"Failed to join {realm_name}")
         print(stderr)
-
     return rc, stdout, stderr
 
 
