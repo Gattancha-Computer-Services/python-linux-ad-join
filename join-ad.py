@@ -106,6 +106,7 @@ def join_domain():
 def configure_domain():
     run_command("realm", "deny", "--all")
     run_command("realm","permit","-g","'"+sudo_group_name+"'")
+    update_sssd_conf()
 
 def format_as_dn(ou_path, domain):
     parts = re.split(r"[\\/]", ou_path)
@@ -122,4 +123,3 @@ full_ou_path = format_as_dn(org_unit,domain_name)
 dnf_install(*dnf_packages)
 join_domain()
 configure_domain()
-update_sssd_conf()
