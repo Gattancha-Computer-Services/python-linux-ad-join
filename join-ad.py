@@ -92,6 +92,9 @@ def run_command(*args):
     except subprocess.CalledProcessError as e:
         print(f"Error: ", e.stderr)
 
+def enable_svc(service):
+    run_command("systemctl","enable","--now",service)
+
 def dnf_install(*packages):
     
     for package in list(packages):
@@ -117,12 +120,10 @@ def join_domain():
         print(stderr)
     return rc, stdout, stderr
 
-
 def configure_domain():
     run_command("realm", "deny", "--all")
     run_command("realm","permit","-g","'"+sudo_group_name+"'")
     update_sssd_conf()
-
 def format_as_dn(ou_path, domain):
     parts = re.split(r"[\\/]", ou_path)
     ou_string = ",".join(f"OU={p}" for p in reversed(parts))
@@ -148,3 +149,6 @@ dnf_install(*dnf_packages)
 join_domain()
 configure_domain()
 update_sudoers()
+enable_svc("sssd")
+enable_svc("oddjobd")
+
