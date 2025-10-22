@@ -33,8 +33,8 @@ This script automates the process of joining a RHEL-based Linux server to Active
 
 Contributors names and contact info
 
-ex. Craig Wilson 
-ex. [@Gatt_](https://x.com/Gatt_)
+GCS Projects
+[@Gatt_](https://x.com/Gatt_)
 
 ## Version History
 
