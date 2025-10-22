@@ -41,12 +41,12 @@ sudo_group_name = "Sudo_Allow"
 ssh_group_name = "SSH_Allow"
 
 #Generated System Variables
-short_domain = domain_name.split(".")[0]
+short_domain = domain_name.split(".")[0].upper()
 realm_name = domain_name.upper()
 os_release = pathlib.Path("/etc/os-release")
 dnf_packages = ["realmd","oddjob","oddjob-mkhomedir","sssd","adcli"]
 fqdn_username = ad_username+"@"+realm_name
-
+sudo_users = f"\"%{short_domain}\\{sudo_group_name}\" ALL=(ALL) ALL"
 
 sssd_file = f"""[sssd]
 domains = {domain_name}
