@@ -1,5 +1,25 @@
 #!/usr/bin/env python3
+'''
+Author: Craig Wilson
+Copyright: Gattancha Computer Services
+Created: 2025-10-22
+Last Modified: 2025-10-22 by Craig Wilson
+Version: 2510.22.0
 
+Description:
+This module automates the process of joining a linux server to an Active Directory Domain
+When run the user will need to provide some information as shown in the example
+
+Example:
+#> ./join-ad.py
+AD Administrator: domain-admin-1
+Password for 'domain-admin-1': Password123!
+FQDN Domain Name: test.lan
+OU Path: Computers/Servers/Linux
+
+<script output here>
+
+'''
 #Import Statements
 import os
 import subprocess
@@ -17,8 +37,8 @@ domain_name = input("FQDN Domain Name: ").lower()
 org_unit = input("OU Path: ")
 
 # TODO: Possible User vars..
-sudo_group_name = "Sudo_Allow" # Change this?
-ssh_group_name = "SSH_Allow"   # Change this?
+sudo_group_name = "Sudo_Allow"
+ssh_group_name = "SSH_Allow"
 
 #Generated System Variables
 short_domain = domain_name.split(".")[0]
@@ -26,6 +46,7 @@ realm_name = domain_name.upper()
 os_release = pathlib.Path("/etc/os-release")
 dnf_packages = ["realmd","oddjob","oddjob-mkhomedir","sssd","adcli"]
 fqdn_username = ad_username+"@"+realm_name
+
 
 sssd_file = f"""[sssd]
 domains = {domain_name}
