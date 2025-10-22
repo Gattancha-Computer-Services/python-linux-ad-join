@@ -17,8 +17,8 @@ domain_name = input("FQDN Domain Name: ").lower()
 org_unit = input("OU Path: ")
 
 # TODO: Possible User vars..
-sudo_group_name = "G_Linux_Sudo_Allow"
-ssh_group_name = "G_Linux_SSH_Allow"
+sudo_group_name = "Sudo_Allow" # Change this?
+ssh_group_name = "SSH_Allow"   # Change this?
 
 #Generated System Variables
 short_domain = domain_name.split(".")[0]
